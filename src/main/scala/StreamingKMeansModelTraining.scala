@@ -50,29 +50,19 @@ object StreamingKMeansModelTraining {
       LocationStrategies.PreferConsistent,
       ConsumerStrategies.Subscribe[String, String](topicsSet, kafkaParams))
 
-    val inputLines = messages.map(_.value).map(_.split(","))
+    val strippedMessages = messages.map(_.value).map(_.split("\""))
+    val inputLines = strippedMessages.map(_(1).split(","))
 
-//    inputLines.foreachRDD( rdd => {
-//      for (i <- rdd.map(_(1))) {
-//        println(i)
-//      }
-//    })
-    val timestamp = inputLines.map(_(0)).map(_+" "+LocalDateTime.now().toString())
-
-//    timestamp.foreachRDD( rdd => {
-//      println(rdd.toString())
-//    })
-//    val coords = inputLines.map(_(1).split(" "))
-
-//    coords.foreachRDD(rdd => {
+//    inputLines.foreachRDD(rdd => {
 //      for (i <- rdd) {
 //        for (j <- i) {
 //          println(j)
 //        }
 //      }
 //    })
+
+    val timestamp = inputLines.map(_(0)).map(_+" "+LocalDateTime.now().toString())
     val coords = inputLines.map(_(1).split(" ").map(_.toDouble)).map(x => Vectors.dense(x))
-////    val target = inputLines.map(_(2).toInt)
     coords.foreachRDD(rdd => {
       model.update(rdd, 1.0, "batches")
       println("Centers:")

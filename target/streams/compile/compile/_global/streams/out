@@ -1,4 +1,4 @@
-[0m[[0m[33mwarn[0m] [0m[0m/Users/ronnie/Documents/StreamingKMeansModelTrained/src/main/scala/StreamingKMeansModel.scala:10:56: imported `StreamingKMeansModel' is permanently hidden by definition of object StreamingKMeansModel in package stream[0m
-[0m[[0m[33mwarn[0m] [0m[0mimport org.apache.spark.mllib.clustering.{KMeansModel, StreamingKMeansModel}[0m
-[0m[[0m[33mwarn[0m] [0m[0m                                                       ^[0m
-[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/ronnie/Documents/StreamingKMeansModelTrained/src/main/scala/StreamingKMeansModelTraining.scala:53:69: value split is not a member of Array[String][0m
+[0m[[0m[31merror[0m] [0m[0m    val inputLines = messages.map(_.value).map(_.split("\"")).map(_.split(","))[0m
+[0m[[0m[31merror[0m] [0m[0m                                                                    ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

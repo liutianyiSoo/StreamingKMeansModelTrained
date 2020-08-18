@@ -59,10 +59,6 @@ producer = KafkaProducer(bootstrap_servers=['localhost:9092'], value_serializer 
 sleep(10)
 for i in range(len(features)):
     message = str(datetime.now()) + ',' + ' '.join([str(j) for j in features[i]]) + ',' + str(target[i])
-#     for j in features[i]:
-#         message += str(j)+' '
-#     message = message.strip()
-#     message += ','+str(target[i])
     print(message)
     producer.send('test',value=message)
-#     sleep(0.01)
+

@@ -67,7 +67,7 @@ def streamingKMeans():
         'consumer-group '
         'test'
     )
-    runChecker()
+#     runChecker()
 
 def runChecker():
     # transfer checker
