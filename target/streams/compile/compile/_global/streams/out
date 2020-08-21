@@ -1,4 +1,10 @@
-[0m[[0m[31merror[0m] [0m[0m/Users/ronnie/Documents/StreamingKMeansModelTrained/src/main/scala/StreamingKMeansModelTraining.scala:53:69: value split is not a member of Array[String][0m
-[0m[[0m[31merror[0m] [0m[0m    val inputLines = messages.map(_.value).map(_.split("\"")).map(_.split(","))[0m
-[0m[[0m[31merror[0m] [0m[0m                                                                    ^[0m
-[0m[[0m[31merror[0m] [0m[0mone error found[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/ronnie/Documents/StreamingKMeansModelTrained/src/main/scala/StreamingKMeansModelTraining.scala:57:52: not found: value LocalDateTime[0m
+[0m[[0m[31merror[0m] [0m[0m    val timestamp = inputLines.map(_(0)).map(_+" "+LocalDateTime.now().toString())[0m
+[0m[[0m[31merror[0m] [0m[0m                                                   ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/ronnie/Documents/StreamingKMeansModelTrained/src/main/scala/StreamingKMeansModelTraining.scala:67:20: reference to File is ambiguous;[0m
+[0m[[0m[31merror[0m] [0m[0mit is imported twice in the same scope by[0m
+[0m[[0m[31merror[0m] [0m[0mimport scala.reflect.io.File[0m
+[0m[[0m[31merror[0m] [0m[0mand import java.io.{File, FileWriter, BufferedWriter}[0m
+[0m[[0m[31merror[0m] [0m[0m    val file = new File("/home/ronald/kmeansModel")[0m
+[0m[[0m[31merror[0m] [0m[0m                   ^[0m
+[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m

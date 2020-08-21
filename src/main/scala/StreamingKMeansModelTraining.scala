@@ -6,6 +6,7 @@ import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.common.serialization.StringDeserializer
 
 import scala.io.Source
+import java.io.{File, PrintWriter}
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.mllib.clustering.{KMeansModel, StreamingKMeansModel}
 import org.apache.spark.mllib.linalg
@@ -53,32 +54,32 @@ object StreamingKMeansModelTraining {
     val strippedMessages = messages.map(_.value).map(_.split("\""))
     val inputLines = strippedMessages.map(_(1).split(","))
 
-//    inputLines.foreachRDD(rdd => {
-//      for (i <- rdd) {
-//        for (j <- i) {
-//          println(j)
-//        }
-//      }
-//    })
-
     val timestamp = inputLines.map(_(0)).map(_+" "+LocalDateTime.now().toString())
     val coords = inputLines.map(_(1).split(" ").map(_.toDouble)).map(x => Vectors.dense(x))
     coords.foreachRDD(rdd => {
       model.update(rdd, 1.0, "batches")
-      println("Centers:")
-      for (i <- model.clusterCenters) {
-        println(i.toString())
-      }
-      println("Cluster Weights:")
-      for (i <- model.clusterWeights) {
-        println(i.toString())
-      }
     })
 
     ssc.start()
     ssc.awaitTerminationOrTimeout(120000)
     ssc.stop()
-    val sc = new SparkContext(conf)
-    model.save(sc, "/home/ronald/kmeansModel")
+
+    val file = new File("/home/ronald/kmeansModel")
+    val pw = new PrintWriter(file)
+    println("Centers:")
+    for (i <- model.clusterCenters) {
+      println(i.toString())
+      pw.write(i.toString()+"\n")
+    }
+    pw.close()
+    println("Cluster Weights:")
+    for (i <- model.clusterWeights) {
+      println(i.toString())
+    }
+    println(model.toPMML())
+//    println(model.toPMML())
+//    model.toPMML("/home/ronald/kmeansModel")
+//    val sc = new SparkContext(conf)
+//    model.save(sc, "/home/ronald/kmeansModel")
   }
 }

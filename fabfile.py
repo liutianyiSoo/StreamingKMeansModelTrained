@@ -47,7 +47,20 @@ def startKafka():
 def stopKafka():
     master.run('tmux kill-session -t kafka')
 
-def streamingKMeans():
+def stop():
+    stopKafka()
+    stopSparkCluster()
+
+def startSparkCluster():
+    master.run('source /etc/profile && $SPARK_HOME/sbin/start-all.sh')
+    # c2.run('cd /usr/local/spark && ./sbin/start-slaves.sh')
+
+
+def stopSparkCluster():
+    master.run('source /etc/profile && $SPARK_HOME/sbin/stop-all.sh')
+    # c2.run('cd /usr/local/spark && ./sbin/stop-all.sh')
+
+def trainModel():
     # Create Package
     os.system('sbt package')
     # Transfer package
@@ -55,13 +68,19 @@ def streamingKMeans():
     transfer.put('./target/scala-2.12/streamingkmeansmodeltrained_2.12-0.1.jar')
     # Transfer datagenerator
     transfer.put('./kafkaProducer.py')
+    # start spark cluster
+    startSparkCluster()
     # start kafka
     startKafka()
     master.run('rm -rf kmeansModel')
+    for connection in slaveConnections:
+        connection.run('rm -rf kmeansModel')
+#     master.run('rm kmeansModel')
     master.run(
         'source /etc/profile && cd $SPARK_HOME && bin/spark-submit '
         '--packages org.apache.spark:spark-streaming-kafka-0-10_2.12:3.0.0 '
         '--class example.stream.StreamingKMeansModelTraining '
+        '--master spark://' + str(masterHost) + ':7077 --executor-memory 2g '
         '~/streamingkmeansmodeltrained_2.12-0.1.jar '
         '192.168.122.54:9092 '
         'consumer-group '
