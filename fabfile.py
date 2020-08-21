@@ -72,10 +72,10 @@ def trainModel():
     startSparkCluster()
     # start kafka
     startKafka()
-    master.run('rm -rf kmeansModel')
+    master.run('rm kmeansModel')
     for connection in slaveConnections:
-        connection.run('rm -rf kmeansModel')
-#     master.run('rm kmeansModel')
+        connection.run('rm kmeansModel')
+
     master.run(
         'source /etc/profile && cd $SPARK_HOME && bin/spark-submit '
         '--packages org.apache.spark:spark-streaming-kafka-0-10_2.12:3.0.0 '
@@ -86,7 +86,7 @@ def trainModel():
         'consumer-group '
         'test'
     )
-#     runChecker()
+    runChecker()
 
 def runChecker():
     # transfer checker
