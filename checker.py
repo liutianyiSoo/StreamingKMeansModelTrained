@@ -1,6 +1,7 @@
 from pyspark.mllib.clustering import KMeansModel
 from pyspark.mllib.linalg import Vectors
 from pyspark import SparkContext
+from itertools import permutations
 import csv
 import operator
 
@@ -25,20 +26,18 @@ with open('/home/ronald/centers.csv','r') as f:
             center.append(row[i])
         realCenters.append(Vectors.dense(center))
 
-distTable = []
+perm = list(permutations([i for i in range(8)]))
 
-for i in modelCenters:
-    distRow = []
-    for j in realCenters:
-        distRow.append(Vectors.squared_distance(i,j))
-    distTable.append(distRow)
+totalDist = []
+for i in perm:
+    dist = 0
+    for j in range(len(i)):
+        dist += Vectors.squared_distance(modelCenters[j], realCenters[i[j]])
+    totalDist.append(dist)
 
 ref = []
-for i in distTable:
-    minIndex, minValue = min(enumerate(i),key=operator.itemgetter(1))
-    ref.append(minIndex)
-    # print(str(minIndex)+' '+str(minValue))
-
+minIndex, minValue = min(enumerate(totalDist),key=operator.itemgetter(1))
+ref = perm[minIndex]
 
 # dataPoint = []
 correct = 0

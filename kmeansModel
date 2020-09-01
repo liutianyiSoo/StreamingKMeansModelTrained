@@ -1,49 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<PMML xmlns="http://www.dmg.org/PMML-4_3" xmlns:data="http://jpmml.org/jpmml-model/InlineTable" version="4.2">
-    <Header description="k-means clustering">
-        <Application name="Apache Spark MLlib" version="3.0.0"/>
-        <Timestamp>2020-08-21T18:48:09</Timestamp>
-    </Header>
-    <DataDictionary numberOfFields="3">
-        <DataField name="field_0" optype="continuous" dataType="double"/>
-        <DataField name="field_1" optype="continuous" dataType="double"/>
-        <DataField name="field_2" optype="continuous" dataType="double"/>
-    </DataDictionary>
-    <ClusteringModel modelName="k-means" functionName="clustering" modelClass="centerBased" numberOfClusters="8">
-        <MiningSchema>
-            <MiningField name="field_0" usageType="active"/>
-            <MiningField name="field_1" usageType="active"/>
-            <MiningField name="field_2" usageType="active"/>
-        </MiningSchema>
-        <ComparisonMeasure kind="distance">
-            <squaredEuclidean/>
-        </ComparisonMeasure>
-        <ClusteringField field="field_0" compareFunction="absDiff"/>
-        <ClusteringField field="field_1" compareFunction="absDiff"/>
-        <ClusteringField field="field_2" compareFunction="absDiff"/>
-        <Cluster name="cluster_0">
-            <Array n="3" type="real">-1.4405971961853392 5.805320374485301 -5.850382434100657</Array>
-        </Cluster>
-        <Cluster name="cluster_1">
-            <Array n="3" type="real">-1.0034124234815387 -5.109860830176044 5.181350019847185</Array>
-        </Cluster>
-        <Cluster name="cluster_2">
-            <Array n="3" type="real">4.100780100227272 3.84066178021968 -6.355860932704112</Array>
-        </Cluster>
-        <Cluster name="cluster_3">
-            <Array n="3" type="real">0.2148402795463487 -2.1868607054882743 -7.105082000811768</Array>
-        </Cluster>
-        <Cluster name="cluster_4">
-            <Array n="3" type="real">-9.479116995780933 -2.768566280227586 0.22181783837867014</Array>
-        </Cluster>
-        <Cluster name="cluster_5">
-            <Array n="3" type="real">-6.86319205277301 0.9746270474053291 -7.021738201771797</Array>
-        </Cluster>
-        <Cluster name="cluster_6">
-            <Array n="3" type="real">-0.6122116230013909 0.033312556453240175 4.595958015197915</Array>
-        </Cluster>
-        <Cluster name="cluster_7">
-            <Array n="3" type="real">-1.5101934692817007 8.153178118083048 8.050599056374253</Array>
-        </Cluster>
-    </ClusteringModel>
-</PMML>
+[1.2534532460776162,6.856679967181538,3.2250501720228986]
+[-10.156657154465908,-3.5848788898966317,5.3892944840376265]
+[7.343686057025131,-11.061152622924743,-2.216243802981913]
+[7.639490535857643,7.346779839460504,-6.256346105555394]
+[5.260989605336341,-4.187107444793483,-7.75039924860727]
+[-2.977963283723903,8.066823117575682,3.9921342376677287]
+[-4.450148486378611,8.787812917303558,4.402385261958164]
+[-12.285750997179061,7.940200135184089,0.3459198736853741]

@@ -72,9 +72,9 @@ def trainModel():
     startSparkCluster()
     # start kafka
     startKafka()
-    master.run('rm kmeansModel')
-    for connection in slaveConnections:
-        connection.run('rm kmeansModel')
+    #master.run('rm kmeansModel')
+    #for connection in slaveConnections:
+    #    connection.run('rm kmeansModel')
 
     master.run(
         'source /etc/profile && cd $SPARK_HOME && bin/spark-submit '
