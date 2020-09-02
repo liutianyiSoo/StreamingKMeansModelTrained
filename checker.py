@@ -57,3 +57,15 @@ with open('/home/ronald/data.csv','r') as f:
         # dataPoint.append(data)
 
 print(str(correct/(incorrect+correct)*100)+'%')
+
+centers = []
+with open('/home/ronald/kmeansModel','r') as f:
+    line = f.readline()
+    while line:
+        centers.append(line)
+        line = f.readline()
+
+# Adjust the real centers
+with open('/home/ronald/kmeansModel','w') as f:
+    for i in range(len(ref)):
+        f.write(centers[ref.index(i)])
