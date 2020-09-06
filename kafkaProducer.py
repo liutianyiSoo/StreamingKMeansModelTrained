@@ -54,9 +54,8 @@ with open('data.csv','w') as f:
             dct[fieldnames[j]]=features[i][j]
         dct[fieldnames[len(features[i])]] = target[i]
         writer.writerow(dct)
-
-producer = KafkaProducer(bootstrap_servers=['localhost:9092'], value_serializer = lambda x: dumps(x).encode('utf-8'))
 sleep(10)
+producer = KafkaProducer(bootstrap_servers=['192.168.122.121:9092'], value_serializer = lambda x: dumps(x).encode('utf-8'))
 for i in range(len(features)):
     message = str(datetime.now()) + ',' + ' '.join([str(j) for j in features[i]]) + ',' + str(target[i])
     print(message)
