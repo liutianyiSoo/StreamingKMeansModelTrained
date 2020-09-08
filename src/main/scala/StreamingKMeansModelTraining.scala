@@ -6,6 +6,7 @@ import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.common.serialization.StringDeserializer
 
 import scala.io.Source
+import scala.util.Random
 import java.io.{File, PrintWriter}
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.mllib.clustering.{KMeansModel, StreamingKMeansModel}
@@ -20,13 +21,13 @@ object StreamingKMeansModelTraining {
     val conf = new SparkConf().setAppName("StreamingKMeansModelTraining")
     val ssc = new StreamingContext(conf,Seconds(1))
 
-    val filename = "/home/ronald/random_centers.csv"
-    val lines = Source.fromFile(filename).getLines.toArray.map(_.split(","))
+//    val filename = "/home/ronald/random_centers.csv"
+//    val lines = Source.fromFile(filename).getLines.toArray.map(_.split(","))
 
     // read the random centers
-    val centers:Array[linalg.Vector] = new Array[linalg.Vector](lines.length-1)
-    for (i <- 1 to lines.length-1) {
-      centers(i-1) = Vectors.dense(lines(i).map(_.toDouble))
+    val centers:Array[linalg.Vector] = new Array[linalg.Vector](8)
+    for (i <- 0 to centers.length-1) {
+      centers(i) = Vectors.dense(Array(Random.nextDouble, Random.nextDouble, Random.nextDouble).map(_*30-15))
     }
     // create equal weights
     val weights:Array[Double] = new Array[Double](centers.length)
@@ -62,7 +63,8 @@ object StreamingKMeansModelTraining {
 
     ssc.start()
     ssc.awaitTerminationOrTimeout(120000)
-    ssc.stop()
+
+
 
     val file = new File("/home/ronald/kmeansModel")
     val pw = new PrintWriter(file)
